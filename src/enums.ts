@@ -1,13 +1,13 @@
-export const enum BlockType {
-  STORE = "sto",
-  EMPLOYEE = "emp",
-  SHIFT = "sf",
-  CUSTOMBLOCK = "cb",
-  CUSTOMFIELD = "cbf",
-  SCHEMA = "sch",
-  FIELDOPTION = "fdo",
-  CUSTOMDATAGROUP = "cdg",
-}
+export const BlockType = {
+  STORE: "sto",
+  EMPLOYEE: "emp",
+  SHIFT: "sf",
+  CUSTOMBLOCK: "cb",
+  CUSTOMFIELD: "cbf",
+  SCHEMA: "sch",
+  FIELDOPTION: "fdo",
+  CUSTOMDATAGROUP: "cdg",
+} as const;
 
 export const enum UserType {
   ADMIN,

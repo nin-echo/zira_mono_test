@@ -11,36 +11,45 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CustomFieldOption = void 0;
 const core_1 = require("@mikro-orm/core");
+const enums_1 = require("../enums");
+const type_graphql_1 = require("type-graphql");
 const uuid_1 = require("uuid");
 const CustomField_1 = require("./CustomField");
 let CustomFieldOption = class CustomFieldOption {
     constructor() {
+        this.id = uuid_1.v4();
         this.createdAt = new Date();
         this.updatedAt = new Date();
     }
 };
 __decorate([
+    type_graphql_1.Field(),
     core_1.PrimaryKey(),
-    core_1.Formula(`${"fdo"}-${uuid_1.v4()}`),
+    core_1.Formula(`${enums_1.BlockType.FIELDOPTION}-${uuid_1.v4()}`),
     __metadata("design:type", String)
 ], CustomFieldOption.prototype, "id", void 0);
 __decorate([
+    type_graphql_1.Field(),
     core_1.Property({ type: "date" }),
     __metadata("design:type", Date)
 ], CustomFieldOption.prototype, "createdAt", void 0);
 __decorate([
+    type_graphql_1.Field(),
     core_1.Property({ type: "date", onUpdate: () => new Date() }),
     __metadata("design:type", Date)
 ], CustomFieldOption.prototype, "updatedAt", void 0);
 __decorate([
+    type_graphql_1.Field(),
     core_1.Property({ version: true }),
     __metadata("design:type", Number)
 ], CustomFieldOption.prototype, "version", void 0);
 __decorate([
+    type_graphql_1.Field(() => CustomField_1.CustomField),
     core_1.OneToOne(() => CustomField_1.CustomField, (parentField) => parentField.fieldOption),
     __metadata("design:type", CustomField_1.CustomField)
 ], CustomFieldOption.prototype, "parentField", void 0);
 CustomFieldOption = __decorate([
+    type_graphql_1.ObjectType(),
     core_1.Entity()
 ], CustomFieldOption);
 exports.CustomFieldOption = CustomFieldOption;

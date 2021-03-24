@@ -11,9 +11,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Schema = void 0;
 const core_1 = require("@mikro-orm/core");
+const enums_1 = require("../enums");
 const uuid_1 = require("uuid");
 const CustomBlock_1 = require("./CustomBlock");
 const CustomField_1 = require("./CustomField");
+const type_graphql_1 = require("type-graphql");
 let Schema = class Schema {
     constructor() {
         this.createdAt = new Date();
@@ -22,35 +24,43 @@ let Schema = class Schema {
     }
 };
 __decorate([
+    type_graphql_1.Field(),
     core_1.PrimaryKey(),
-    core_1.Formula(`${"sch"}-${uuid_1.v4()}`),
+    core_1.Formula(`${enums_1.BlockType.SCHEMA}-${uuid_1.v4()}`),
     __metadata("design:type", String)
 ], Schema.prototype, "id", void 0);
 __decorate([
+    type_graphql_1.Field(),
     core_1.Property({ type: "date" }),
     __metadata("design:type", Date)
 ], Schema.prototype, "createdAt", void 0);
 __decorate([
+    type_graphql_1.Field(),
     core_1.Property({ type: "date", onUpdate: () => new Date() }),
     __metadata("design:type", Date)
 ], Schema.prototype, "updatedAt", void 0);
 __decorate([
+    type_graphql_1.Field(() => String),
     core_1.Property({ type: "json", nullable: false }),
     __metadata("design:type", Object)
 ], Schema.prototype, "view", void 0);
 __decorate([
+    type_graphql_1.Field(() => CustomBlock_1.CustomBlock),
     core_1.OneToOne(() => CustomBlock_1.CustomBlock),
     __metadata("design:type", CustomBlock_1.CustomBlock)
 ], Schema.prototype, "parentBlock", void 0);
 __decorate([
+    type_graphql_1.Field(() => [CustomField_1.CustomField]),
     core_1.OneToMany(() => CustomField_1.CustomField, (customField) => customField.schema),
     __metadata("design:type", Object)
 ], Schema.prototype, "customFields", void 0);
 __decorate([
+    type_graphql_1.Field(),
     core_1.Property({ version: true }),
     __metadata("design:type", Number)
 ], Schema.prototype, "version", void 0);
 Schema = __decorate([
+    type_graphql_1.ObjectType(),
     core_1.Entity()
 ], Schema);
 exports.Schema = Schema;
