@@ -7,16 +7,17 @@ export const BlockType = {
   SCHEMA: "sch",
   FIELDOPTION: "fdo",
   CUSTOMDATAGROUP: "cdg",
+  OPTIONVALUE: "opv",
 } as const;
 
-export const enum UserType {
+export enum UserType {
   ADMIN,
   MANAGER,
   EMPLOYEE,
 }
 
 /** requres more on this */
-export const enum CustomFieldType {
+export enum CustomFieldType {
   TEXT,
   NUMBER,
   MULTISELECTION,

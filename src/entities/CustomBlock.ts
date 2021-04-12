@@ -1,10 +1,4 @@
-import {
-  Entity,
-  Property,
-  OneToOne,
-  PrimaryKey,
-  Formula,
-} from "@mikro-orm/core";
+import { Entity, Property, OneToOne, PrimaryKey } from "@mikro-orm/core";
 import { BlockType } from "../enums";
 import { Field, ObjectType } from "type-graphql";
 import { v4 as uuidv4 } from "uuid";
@@ -16,8 +10,7 @@ export class CustomBlock {
   /** uuid generated for custom block with prefix */
   @Field()
   @PrimaryKey()
-  @Formula(`${BlockType.CUSTOMBLOCK}-${uuidv4()}`)
-  id!: string;
+  id: string = `${BlockType.CUSTOMBLOCK}-${uuidv4()}`;
 
   @Field()
   @Property({ type: "date" })
@@ -28,15 +21,15 @@ export class CustomBlock {
   updatedAt: Date = new Date();
 
   @Field()
-  @Property({ default: "My New Block" })
+  @Property({ type: "text", unique: true })
   title!: string;
 
   /** relation ids for this block */
-  @Field(() => [String])
-  @Property()
-  public relationIds: string[];
+  @Field(() => [String], { nullable: true })
+  @Property({ nullable: true })
+  relationIds: string[];
 
-  @Field()
+  @Field({ nullable: true })
   @OneToOne(() => Schema, (schema) => schema.parentBlock)
   schema: Schema;
 

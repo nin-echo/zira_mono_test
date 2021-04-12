@@ -18,14 +18,21 @@ const mikro_orm_config_1 = __importDefault(require("./mikro-orm.config"));
 const express_1 = __importDefault(require("express"));
 const apollo_server_express_1 = require("apollo-server-express");
 const type_graphql_1 = require("type-graphql");
-const customBlock_1 = require("./resolvers/customBlock");
+const CustomBlockResolver_1 = require("./resolvers/CustomBlockResolver");
+const SchemaResolver_1 = require("./resolvers/SchemaResolver");
+const CustomFieldResolver_1 = require("./resolvers/CustomFieldResolver");
+const FieldOptionResolver_1 = require("./resolvers/FieldOptionResolver");
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
     const orm = yield core_1.MikroORM.init(mikro_orm_config_1.default);
-    yield orm.getMigrator().up();
     const app = express_1.default();
     const apollorServer = new apollo_server_express_1.ApolloServer({
         schema: yield type_graphql_1.buildSchema({
-            resolvers: [customBlock_1.CustomBlockResolver],
+            resolvers: [
+                CustomBlockResolver_1.CustomBlockResolver,
+                SchemaResolver_1.SchemaResolver,
+                CustomFieldResolver_1.CustomFieldResolver,
+                FieldOptionResolver_1.FieldOptionResolver,
+            ],
             validate: false,
         }),
         context: () => ({ em: orm.em }),

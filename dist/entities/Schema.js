@@ -16,8 +16,10 @@ const uuid_1 = require("uuid");
 const CustomBlock_1 = require("./CustomBlock");
 const CustomField_1 = require("./CustomField");
 const type_graphql_1 = require("type-graphql");
+const graphql_type_json_1 = require("graphql-type-json");
 let Schema = class Schema {
     constructor() {
+        this.id = `${enums_1.BlockType.SCHEMA}-${uuid_1.v4()}`;
         this.createdAt = new Date();
         this.updatedAt = new Date();
         this.customFields = new core_1.Collection(this);
@@ -26,7 +28,6 @@ let Schema = class Schema {
 __decorate([
     type_graphql_1.Field(),
     core_1.PrimaryKey(),
-    core_1.Formula(`${enums_1.BlockType.SCHEMA}-${uuid_1.v4()}`),
     __metadata("design:type", String)
 ], Schema.prototype, "id", void 0);
 __decorate([
@@ -40,8 +41,8 @@ __decorate([
     __metadata("design:type", Date)
 ], Schema.prototype, "updatedAt", void 0);
 __decorate([
-    type_graphql_1.Field(() => String),
-    core_1.Property({ type: "json", nullable: false }),
+    type_graphql_1.Field(() => graphql_type_json_1.GraphQLJSONObject),
+    core_1.Property({ type: "json", nullable: true }),
     __metadata("design:type", Object)
 ], Schema.prototype, "view", void 0);
 __decorate([

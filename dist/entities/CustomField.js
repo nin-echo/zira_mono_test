@@ -18,21 +18,21 @@ const Schema_1 = require("./Schema");
 const type_graphql_1 = require("type-graphql");
 let CustomField = class CustomField {
     constructor() {
+        this.id = `${enums_1.BlockType.CUSTOMFIELD}-${uuid_1.v4()}`;
+        this.dataGroupId = `${enums_1.BlockType.CUSTOMDATAGROUP}-${uuid_1.v4()}`;
         this.createdAt = new Date();
         this.updatedAt = new Date();
-        this.permitEditBy = 1;
-        this.type = 0;
+        this.permitEditBy = enums_1.UserType.MANAGER;
+        this.type = enums_1.CustomFieldType.TEXT;
     }
 };
 __decorate([
     type_graphql_1.Field(),
     core_1.PrimaryKey(),
-    core_1.Formula(`${enums_1.BlockType.CUSTOMFIELD}-${uuid_1.v4()}`),
     __metadata("design:type", String)
 ], CustomField.prototype, "id", void 0);
 __decorate([
     type_graphql_1.Field(),
-    core_1.Formula(`${enums_1.BlockType.CUSTOMDATAGROUP}-${uuid_1.v4()}`),
     __metadata("design:type", String)
 ], CustomField.prototype, "dataGroupId", void 0);
 __decorate([
@@ -56,15 +56,20 @@ __decorate([
     __metadata("design:type", Schema_1.Schema)
 ], CustomField.prototype, "schema", void 0);
 __decorate([
-    type_graphql_1.Field(),
-    core_1.Enum({ default: 1 }),
+    type_graphql_1.Field(() => String),
+    core_1.Enum({ default: enums_1.UserType.MANAGER }),
     __metadata("design:type", Number)
 ], CustomField.prototype, "permitEditBy", void 0);
 __decorate([
-    type_graphql_1.Field(),
-    core_1.Enum({ default: 0 }),
+    type_graphql_1.Field(() => String),
+    core_1.Enum({ default: enums_1.CustomFieldType.TEXT }),
     __metadata("design:type", Number)
 ], CustomField.prototype, "type", void 0);
+__decorate([
+    type_graphql_1.Field(() => [String]),
+    core_1.Property(),
+    __metadata("design:type", Array)
+], CustomField.prototype, "valueOptionId", void 0);
 __decorate([
     type_graphql_1.Field(),
     core_1.OneToOne(),

@@ -3,12 +3,13 @@ import {
   PrimaryKey,
   Property,
   OneToOne,
-  Formula,
+  OneToMany,
 } from "@mikro-orm/core";
 import { BlockType } from "../enums";
 import { Field, ObjectType } from "type-graphql";
 import { v4 as uuidv4 } from "uuid";
 import { CustomField } from "./CustomField";
+import { OptionValue } from "./CustomFieldOptionValue";
 
 @ObjectType()
 @Entity()
@@ -16,8 +17,12 @@ export class CustomFieldOption {
   /** uuid generated for custom field with prefix */
   @Field()
   @PrimaryKey()
-  @Formula(`${BlockType.FIELDOPTION}-${uuidv4()}`)
   id: string = uuidv4();
+
+  /** arranged in add cells to row or column */
+  @Field()
+  @Property()
+  optionId: string = `${BlockType.FIELDOPTION}-${uuidv4()}`;
 
   @Field()
   @Property({ type: "date" })
@@ -31,7 +36,16 @@ export class CustomFieldOption {
   @Property({ version: true })
   version!: number;
 
+  /** column title */
+  @Field()
+  @Property()
+  title: string;
+
   @Field(() => CustomField)
   @OneToOne(() => CustomField, (parentField) => parentField.fieldOption)
   parentField!: CustomField;
+
+  @Field(() => [OptionValue])
+  @OneToMany(() => OptionValue, (optionValue) => optionValue.parentFieldOption)
+  values!: OptionValue[];
 }

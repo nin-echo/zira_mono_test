@@ -5,7 +5,6 @@ import {
   Enum,
   ManyToOne,
   OneToOne,
-  Formula,
 } from "@mikro-orm/core";
 import { BlockType, UserType, CustomFieldType } from "../enums";
 import { v4 as uuidv4 } from "uuid";
@@ -19,12 +18,11 @@ export class CustomField {
   /** uuid generated for custom field with prefix */
   @Field()
   @PrimaryKey()
-  @Formula(`${BlockType.CUSTOMFIELD}-${uuidv4()}`)
-  id!: string;
+  id: string = `${BlockType.CUSTOMFIELD}-${uuidv4()}`;
 
+  /** arranged in add cells to row or column */
   @Field()
-  @Formula(`${BlockType.CUSTOMDATAGROUP}-${uuidv4()}`)
-  dataGroupId!: string;
+  dataGroupId: string = `${BlockType.CUSTOMDATAGROUP}-${uuidv4()}`;
 
   @Field()
   @Property({ type: "date" })
@@ -42,13 +40,19 @@ export class CustomField {
   @ManyToOne(() => Schema)
   schema!: Schema;
 
-  @Field()
+  @Field(() => String)
   @Enum({ default: UserType.MANAGER })
   permitEditBy: UserType = UserType.MANAGER;
 
-  @Field()
+  @Field(() => String)
   @Enum({ default: CustomFieldType.TEXT })
   type: CustomFieldType = CustomFieldType.TEXT;
+
+  /** point to option id or other objects id */
+  /** displayed value from options */
+  @Field(() => [String])
+  @Property()
+  valueOptionId!: String[];
 
   @Field()
   @OneToOne()

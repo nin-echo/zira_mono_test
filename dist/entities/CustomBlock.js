@@ -17,6 +17,7 @@ const uuid_1 = require("uuid");
 const Schema_1 = require("./Schema");
 let CustomBlock = class CustomBlock {
     constructor() {
+        this.id = `${enums_1.BlockType.CUSTOMBLOCK}-${uuid_1.v4()}`;
         this.createdAt = new Date();
         this.updatedAt = new Date();
     }
@@ -24,7 +25,6 @@ let CustomBlock = class CustomBlock {
 __decorate([
     type_graphql_1.Field(),
     core_1.PrimaryKey(),
-    core_1.Formula(`${enums_1.BlockType.CUSTOMBLOCK}-${uuid_1.v4()}`),
     __metadata("design:type", String)
 ], CustomBlock.prototype, "id", void 0);
 __decorate([
@@ -39,16 +39,16 @@ __decorate([
 ], CustomBlock.prototype, "updatedAt", void 0);
 __decorate([
     type_graphql_1.Field(),
-    core_1.Property({ default: "My New Block" }),
+    core_1.Property({ type: "text", unique: true }),
     __metadata("design:type", String)
 ], CustomBlock.prototype, "title", void 0);
 __decorate([
-    type_graphql_1.Field(() => [String]),
-    core_1.Property(),
+    type_graphql_1.Field(() => [String], { nullable: true }),
+    core_1.Property({ nullable: true }),
     __metadata("design:type", Array)
 ], CustomBlock.prototype, "relationIds", void 0);
 __decorate([
-    type_graphql_1.Field(),
+    type_graphql_1.Field({ nullable: true }),
     core_1.OneToOne(() => Schema_1.Schema, (schema) => schema.parentBlock),
     __metadata("design:type", Schema_1.Schema)
 ], CustomBlock.prototype, "schema", void 0);
